@@ -26,7 +26,7 @@ const Info = styled.div`
 `;
 
 const Title = styled.h1`
-  color: black;
+  color: tomato;
   margin: 1.25rem;
 `;
 
@@ -34,7 +34,7 @@ const Button = styled.button`
   border: none;
   padding: 0.625rem;
   background-color: white;
-  color: gray;
+  color: #0e0c0c;
   cursor: pointer;
   border-radius: 5%;
   font-weight: 600;
