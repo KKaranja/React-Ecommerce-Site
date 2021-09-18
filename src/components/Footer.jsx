@@ -8,11 +8,13 @@ import {
   Phone,
   ContactMail,
 } from "@material-ui/icons";
+import { mobile } from "../responsive";
 
 import Img from "../images/Payment2.PNG";
 
 const Container = styled.div`
   display: flex;
+  ${mobile({ flexDirection: "column" })}
 `;
 const Left = styled.div`
   flex: 1;
@@ -46,6 +48,7 @@ const SocialIcon = styled.div`
 const Center = styled.div`
   flex: 1;
   padding: 1.25rem;
+  ${mobile({ diplay: "none" })}
 `;
 
 const Title = styled.h3`
@@ -68,6 +71,7 @@ const ListItem = styled.li`
 const Right = styled.div`
   flex: 1;
   padding: 1.25rem;
+  ${mobile({ backgroundColor: "#fff5f5" })}
 `;
 
 const ContactItem = styled.div`
