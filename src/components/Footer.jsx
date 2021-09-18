@@ -6,7 +6,7 @@ import {
   Facebook,
   Room,
   Phone,
-  AlternateEmail,
+  ContactMail,
 } from "@material-ui/icons";
 
 import Img from "../images/Payment2.PNG";
@@ -132,7 +132,7 @@ const Footer = () => {
           072000000
         </ContactItem>
         <ContactItem>
-          <AlternateEmail style={{ marginRight: "10px" }} />
+          <ContactMail style={{ marginRight: "10px" }} />
           contact@kimura.dev
         </ContactItem>
         <Payment src={Img} />
