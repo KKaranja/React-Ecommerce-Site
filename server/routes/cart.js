@@ -1,16 +1,20 @@
 const router = require("express").Router();
 
-const Product = require("../models/Product");
-const { verifyTokenAndAdmin } = require("./verifyToken");
+const Cart = require("../models/Cart");
+const {
+  verifyTokenAndAdmin,
+  verifyToken,
+  verifyTokenAndAuthorization,
+} = require("./verifyToken");
 
 // CREATE
 
-router.post("/", verifyTokenAndAdmin, async (req, res) => {
-  const newProduct = new Product(req.body);
+router.post("/", verifyToken, async (req, res) => {
+  const newCart = new Cart(req.body);
 
   try {
-    const savedProduct = await newProduct.save();
-    res.status(200).json(savedProduct);
+    const savedCart = await newCart.save();
+    res.status(200).json(savedCart);
   } catch (err) {
     res.status(500).json(err);
   }
@@ -18,9 +22,9 @@ router.post("/", verifyTokenAndAdmin, async (req, res) => {
 
 //UPDATE PRODUCT
 
-router.put("/:id", verifyTokenAndAdmin, async (req, res) => {
+router.put("/:id", verifyTokenAndAuthorization, async (req, res) => {
   try {
-    const updatedProduct = await Product.findByIdAndUpdate(
+    const updatedCart = await Cart.findByIdAndUpdate(
       req.params.id,
       {
         $set: req.body,
@@ -28,55 +32,40 @@ router.put("/:id", verifyTokenAndAdmin, async (req, res) => {
       { new: true }
     );
 
-    res.status(200).json(updatedProduct);
+    res.status(200).json(updatedCart);
   } catch (err) {
     res.status(500).json(err);
   }
 });
 
-// DELETE PRODUCT
+// DELETE
 
-router.delete("/:id", verifyTokenAndAdmin, async (req, res) => {
+router.delete("/:id", verifyTokenAndAuthorization, async (req, res) => {
   try {
-    await Product.findByIdAndDelete(req.params.id);
-    res.status(200).json("Product has been deleted");
+    await Cart.findByIdAndDelete(req.params.id);
+    res.status(200).json("Cart has been deleted");
   } catch (err) {
     res.status(500).json(err);
   }
 });
 
-// GET PRODUCT
-router.get("/find/:id", async (req, res) => {
+// GET USER CART
+router.get("/find/:UserId", verifyTokenAndAuthorization, async (req, res) => {
   try {
-    const product = await Product.findById(req.params.id);
+    const cart = await Cart.findOne({ userId: req.params.UserId });
 
-    res.status(200).json(product);
+    res.status(200).json(cart);
   } catch (err) {
     res.status(500).json(err);
   }
 });
 
-// GET ALL PRODUCTS
-router.get("/", async (req, res) => {
-  const qNew = req.query.new;
-  const qCategory = req.query.category;
+// GET ALL
 
+router.get("/", verifyTokenAndAdmin, async (req, res) => {
   try {
-    let products;
-
-    if (qNew) {
-      products = await Product.find().sort({ createdAt: -1 }).limit(1);
-    } else if (qCategory) {
-      products = await Product.find({
-        categories: {
-          $in: [qCategory],
-        },
-      });
-    } else {
-      products = await Product.find();
-    }
-
-    res.status(200).json(products);
+    const carts = await Cart.find();
+    res.status(200).json(carts);
   } catch (err) {
     res.status(500).json(err);
   }

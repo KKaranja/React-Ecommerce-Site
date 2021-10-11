@@ -1,12 +1,12 @@
 import Home from "./pages/Home";
-// import Product from "./pages/Product";
+import Product from "./pages/Product";
 // import Login from "./pages/Login";
 // import Cart from "./pages/Cart";
 // import Register from "./pages/Register";
-// import ProductList from "./pages/ProductList";
+import ProductList from "./pages/ProductList";
 
 function App() {
-  return <Home />;
+  return <ProductList />;
 }
 
 export default App;
